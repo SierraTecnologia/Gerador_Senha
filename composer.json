@@ -1,0 +1,14 @@
+    {
+        "name": "Gerador de Senha",
+        "description": "Gera senhas aleatórias com Segurança",
+        "authors": [
+            {
+                "name": "Ricardo Rebello Sierra",
+                "email": "contato@ricardosierra.com.br"
+            }
+        ],
+        "require": {
+            "php": ">=5.2.8",
+            "twbs/bootstrap": ">=3.3.4"
+        }
+    }
