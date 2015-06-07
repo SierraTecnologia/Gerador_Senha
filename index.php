@@ -1,8 +1,7 @@
 <?php
 define('SISTEMA_LINGUAGEM_PADRAO', 'pt_BR');
 define('SISTEMA_SERVIDOR', $_SERVER['SERVER_NAME']);
-define('SISTEMA_ENDERECO', $_SERVER ['REQUEST_URI']);
-
+define('SISTEMA_ENDERECO', $_SERVER['REQUEST_URI']);
 
 define('DS', DIRECTORY_SEPARATOR);
 define('US', '/'); // Divisor de URL
@@ -12,13 +11,28 @@ define('LIB_PATH',         ROOT.'libs'.DS);
 define('LANG_PATH',         ROOT.'i18n'.DS);
 
 require DIR_CLASSES.'Funcao.php';
+require DIR_CLASSES.'Visual.php';
 
-if(isset($_GET['tamanho']) && isset($_GET['forca'])){
-    $tamanho = (int) $_GET['tamanho'];
-    $forca = (int) $_GET['forca'];
+if(isset($_POST['tamanho']) && isset($_POST['forca'])){
+    $tamanho = (int) $_POST['tamanho'];
+    $forca = (int) $_POST['forca'];
     $senha = \Classes\Funcao::Gerar_Senha($tamanho, $forca);
+    $Visual = new \Classes\Visual();
     
-    echo json_encode($senha);
+    $conteudo = array(
+        'location' => '#senha_gerada',
+        'js' => '',
+        'html' =>  $senha
+    );
+    $Visual->Json_IncluiTipo('Conteudo',$conteudo);
+    $mensagem = array(
+        'tipo' => 'sucesso',
+        'mgs_principal' => 'Gerado com Sucesso',
+        'mgs_secundaria' =>  'Sua senha é: '.$senha
+    );
+    $Visual->Json_IncluiTipo('Mensagens',$mensagem);
+    
+    echo $Visual->Json_Retorna();
     exit;
 }
 
@@ -101,6 +115,7 @@ $compartilhar[] .= '<g:plusone size="small"></g:plusone>
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="assets/toastr/toastr.min.css">
+    <link rel="stylesheet" href="assets/nprogress/nprogress.css">
 
     <!-- Optional theme -->
     <style>
@@ -112,12 +127,13 @@ $compartilhar[] .= '<g:plusone size="small"></g:plusone>
         text-align: center;
       }
       .col-centered{
-        float: none;
-        margin: 0 auto;
         padding: 0 auto;
         text-align: center;
       }
     </style>
+    <script type="text/javascript">
+    ConfigArquivoPadrao = '<?php echo $_SERVER["HTTP_REFERER"];?>';
+    </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -128,7 +144,7 @@ $compartilhar[] .= '<g:plusone size="small"></g:plusone>
   <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -156,42 +172,55 @@ $compartilhar[] .= '<g:plusone size="small"></g:plusone>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <form>
+                <form method="GET" action="index.php" class="">
                   <div class="form-group">
                     <label for="tamanho"><?php _e('Tamanho da Senha (Vai de 4 até 32)'); ?></label>
-                    <input type="number" max="32" min="4" value="8" class="form-control" id="tamanho" placeholder="<?php _e('Escolha o Tamanho da Senha'); ?>" required>
+                    <input type="number" max="32" min="4" value="8" class="form-control" name="tamanho" id="tamanho" placeholder="<?php _e('Escolha o Tamanho da Senha'); ?>" required>
                   </div>
                   <div class="form-group">
                     <label for="forca"><?php _e('Força da Senha (Vai de 0 até 10)'); ?></label>
-                    <input type="number" max="10" min="0" value="6" class="form-control" id="forca" placeholder="<?php _e('Escolha uma Força para a senha de 0 a 10'); ?>" required>
+                    <input type="number" max="10" min="0" value="6" class="form-control" name="forca" id="forca" placeholder="<?php _e('Escolha uma Força para a senha de 0 a 10'); ?>" required>
                   </div>
                   <button type="submit" class="btn btn-default">Gerar Senha</button>
                 </form>
             </div>
             <div class="col-md-6">
-                <?php _e('A Senha Gerada é:'); ?>
+                <?php _e('A Senha Gerada é:'); ?><span id="senha_gerada"></span>
                 
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 col-centered"><br>
-                <?php 
-                foreach($compartilhar as $valor){
-                    echo $valor; 
-                }
-                ?>
-            </div>
-        </div>
     </div><!-- /.container -->
+    <footer> <!-- Aqui e a area do footer -->
+	<div class="container-fluid">
+            <div class="row">
+                <div id="linksImportantes" class="col-md-3 col-centered">
+                    <!--<a href="http://www.ricardosierra.com.br">Site</a><br>
+                    <a href="http://www.ricardosierra.com.br/blog">Blog</a><br>
+                    <a href="http://www.sierratecnologia.com.br">SierraTecnologia</a>-->
+                </div> <!-- Aqui e a area dos links importantes -->
+                <div id="redesSociais" class="col-md-3  col-centered">
+                    <?php 
+                    foreach($compartilhar as $valor){
+                        echo $valor; 
+                    }
+                    ?>
+                </div> <!-- Aqui e a area das redes sociais -->
+                <div id="logoFooter" class="col-md-offset-3 col-md-3  col-centered">
+                    Feito por <a href="http://www.sierratecnologia.com.br" target="_BLANK">SierraTecnologia</a>
+                </div> <!-- Aqui e a area da logo do rodape -->
+            </div>
+	</div>
+    </footer>
 
-
+    <div class="push"></div><div id="escondido"></div><div class="growlUI" style="display:none;"><h1>SierraTecnologia</h1> <h2>Ricardo Sierra <contato@ricardosierra.com.br></h2></div><div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="popuptitulo">Popup</h4></div><div class="modal-body"></div><div class="modal-footer"></div></div></div></div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="assets/Sistema.js"></script>
     <script src="assets/toastr/toastr.min.js"></script>
+    <script src="assets/nprogress/nprogress.js"></script>
+    <script src="assets/Sistema.js"></script>
   </body>
 </html>

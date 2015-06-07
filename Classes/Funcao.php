@@ -3,6 +3,20 @@
 namespace Classes; 
 
 class Funcao {
+    /**
+     * Verifica a Versão do PHP
+     * Returna TRUE para comporta a versao, e false para versao nao compativel
+     * 
+     * @param type $versao
+     * @return boolean
+     * 
+     * @version 2.0
+     * @author Ricardo Sierra <web@ricardosierra.com.br>
+     */
+    public static function VersionPHP($versao){
+        if (strnatcmp(phpversion(),$versao) >= 0) return TRUE;
+        else                                        return FALSE;
+    }
     static public function Gerar_Senha($tamanho=8, $forca=6) {
         
         $vogais             = '2357';

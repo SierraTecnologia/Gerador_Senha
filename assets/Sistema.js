@@ -57,6 +57,24 @@ var Sierra = (function () {
     function Control_Layoult_Recarrega () {
         
     }
+    /***************************************************************
+    *                                                              *
+    *                      MENSAGENS NA TELA                       *
+    *                                                              *
+    ***************************************************************/
+    /**
+     * 
+     * @param {type} tipo
+     * @returns {undefined}
+     */
+    function Control_PopMgs_Carregando () {
+        NProgress.start();
+        SiteCarregando = true;
+    };
+    function Control_PopMgs_Carregando_Fechar () {
+        SiteCarregando = false;
+        NProgress.done();
+    };
     /**
      * 
      * @param {type} tipo
@@ -161,15 +179,18 @@ var Sierra = (function () {
                 }
             }
         });
+        
+        
         // verifica se pode passar
         if (passar === true) {
+            console.log('aqui');
             Modelo_Ajax_Chamar(url,params,'POST',true,false,true);
             Control_Ajax_Popup_Fechar('popup');
             $button.attr('disabled',false);
             //self.reset();
             return true;
         }else{
-            $button.attr('disabled',true);
+            $button.attr('disabled',false);
         }
         return false;
     };
@@ -212,6 +233,24 @@ var Sierra = (function () {
         }
     };
     /**
+    * Atualiza Hash e Historico
+    * 
+    * @param {type} url
+    * @param {type} data
+    * @returns {undefined}
+     * @author Ricardo Rebello Sierra <contato@ricardosierra.com.br>
+    */
+    function Control_Link_Atualizar (url/*, data*/) {
+        if (url !== SiteHash) {
+            SiteHash = url;
+            //Historico
+            var aleatorio = Math.random();
+            Historico_Controle = aleatorio;
+            History.pushState({/*json: data,*/id: aleatorio}, document.title, url);
+            //window.location.hash = url;
+        }
+    };
+    /**
      * 
      * @param {type} url
      * @param {type} params
@@ -251,7 +290,7 @@ var Sierra = (function () {
 
             },*/success: function (data) {
                 if (resposta === true) {
-                    Cache_Gravar(url,data);
+                    //Cache_Gravar(url,data);
                     Modelo_Ajax_JsonTratar(url,data,historico);
                 }
                 // Agora Tira o CArregando
@@ -266,7 +305,8 @@ var Sierra = (function () {
                 // Trata o Erro
                 if(req.status === 200 && resposta===true){
                     // Caso Pagina Exista, mas JSON Esteja incorreto
-                    Modelo_Ajax_Chamar('_Sistema/erro/Javascript','html='+req.responseText,'POST',false,false,false);
+                    
+                    Control_PopMgs_Abrir('erro','Erro','Odiamos Admitir mas ocorreu um erro. =(');
                 }else{
                     // Página não existe
                 }
