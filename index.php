@@ -185,7 +185,7 @@ $compartilhar[] .= '<g:plusone size="small"></g:plusone>
                 </form>
             </div>
             <div class="col-md-6">
-                <?php _e('A Senha Gerada é:'); ?><span id="senha_gerada"></span>
+                <?php _e('A Senha Gerada é:'); ?><br><b><span id="senha_gerada"></span></b>
                 
             </div>
         </div>

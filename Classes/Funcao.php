@@ -22,29 +22,23 @@ class Funcao {
         $vogais             = '2357';
         $consoantes         = '014689';
         
-        if ($forca >= 1) {
+        if ($forca >= 2) {
             $consoantes .= 'bcdfghjklmnpqrstvwxz';
         }
-        if ($forca >= 2) {
+        if ($forca >= 3) {
             $vogais .= 'aeiouy';
         }
-        if ($forca >= 3) {
+        if ($forca >= 5) {
             $consoantes    .= 'BCDFGHJKLMNPQRSTVWXZ';
         }
-        if ($forca >= 4) {
+        if ($forca >= 6) {
             $vogais        .= "AEIOUY";
         }
-        if ($forca >= 7 ) {
+        if ($forca >= 8 ) {
             $vogais .= '*@';
         }
-        if ($forca >= 8 ) {
-            $vogais .= '-!#%$';
-        }
-        if ($forca >= 9 ) {
-            $consoantes .= 'çÇ';
-        }
         if ($forca >= 10 ) {
-            $vogais .= 'áÁ';
+            $vogais .= '-!#%$';
         }
 
         $senha = '';

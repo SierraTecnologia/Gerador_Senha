@@ -241,6 +241,7 @@ var Sierra = (function () {
      * @author Ricardo Rebello Sierra <contato@ricardosierra.com.br>
     */
     function Control_Link_Atualizar (url/*, data*/) {
+        return true;
         if (url !== SiteHash) {
             SiteHash = url;
             //Historico
