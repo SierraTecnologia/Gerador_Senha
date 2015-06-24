@@ -251,6 +251,15 @@ var Sierra = (function () {
             //window.location.hash = url;
         }
     };
+    // Passa Pro Botao Copiar o texto 
+    function Control_Usuario_Copiar(text){
+        var copyFrom = $('<textarea/>');
+        copyFrom.text(text);
+        $('body').append(copyFrom);
+        copyFrom.select();
+        document.execCommand('copy', true);
+        copyFrom.remove();
+    }
     /**
      * 
      * @param {type} url
