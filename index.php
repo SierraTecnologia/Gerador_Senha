@@ -27,8 +27,8 @@ if(isset($_POST['tamanho']) && isset($_POST['forca'])){
     $Visual->Json_IncluiTipo('Conteudo',$conteudo);
     $mensagem = array(
         'tipo' => 'sucesso',
-        'mgs_principal' => 'Gerado com Sucesso',
-        'mgs_secundaria' =>  'Sua senha é: '.$senha
+        'mgs_principal' => __('Gerado com Sucesso'),
+        'mgs_secundaria' =>  __('Sua senha é: ').$senha
     );
     $Visual->Json_IncluiTipo('Mensagens',$mensagem);
     
@@ -74,14 +74,17 @@ if(stripos(SISTEMA_ENDERECO, '?')===false){
 
 
 
-
-// Twitter
+// Compartilhamento
 $linguagem_quebrada = explode('_',SISTEMA_LINGUAGEM_PADRAO);
 $compartilhar = Array();
+
+// Twitter
 $compartilhar[] =  '<a href="https://twitter.com/share" class="twitter-share-button" data-url="'.SISTEMA_URL_ATUAL.'" data-lang="'.$linguagem_quebrada[0].'">Tweetar</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+
 // Facebook
 $compartilhar[] .= '<iframe src="//www.facebook.com/plugins/like.php?href='.urlencode(SISTEMA_URL_ATUAL).'&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=285497731507842" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>';
+
 // Google Plus
 $compartilhar[] .= '<g:plusone size="small"></g:plusone>
 <script type="text/javascript">
@@ -181,7 +184,7 @@ $compartilhar[] .= '<g:plusone size="small"></g:plusone>
                     <label for="forca"><?php _e('Força da Senha (Vai de 0 até 10)'); ?></label>
                     <input type="number" max="10" min="0" value="6" class="form-control" name="forca" id="forca" placeholder="<?php _e('Escolha uma Força para a senha de 0 a 10'); ?>" required>
                   </div>
-                  <button type="submit" class="btn btn-default">Gerar Senha</button>
+                  <button type="submit" class="btn btn-default"><?php _e('Gerar Senha'); ?></button>
                 </form>
             </div>
             <div class="col-md-6">
@@ -206,13 +209,13 @@ $compartilhar[] .= '<g:plusone size="small"></g:plusone>
                     ?>
                 </div> <!-- Aqui e a area das redes sociais -->
                 <div id="logoFooter" class="col-md-offset-3 col-md-3  col-centered">
-                    Feito por <a href="http://www.sierratecnologia.com.br" target="_BLANK">SierraTecnologia</a>
+                    <?php _e('Feito por: '); ?><a href="http://www.sierratecnologia.com.br" target="_BLANK">SierraTecnologia</a>
                 </div> <!-- Aqui e a area da logo do rodape -->
             </div>
 	</div>
     </footer>
 
-    <div class="push"></div><div id="escondido"></div><div class="growlUI" style="display:none;"><h1>SierraTecnologia</h1> <h2>Ricardo Sierra <contato@ricardosierra.com.br></h2></div><div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="popuptitulo">Popup</h4></div><div class="modal-body"></div><div class="modal-footer"></div></div></div></div>
+    <div class="push"></div><div id="escondido"></div><div class="growlUI" style="display:none;"><h1>SierraTecnologia</h1> <h2>Ricardo Sierra <a href="mailto:contato@ricardosierra.com.br">contato@ricardosierra.com.br</a></h2></div><div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="popuptitulo"><?php _e('Popup'); ?></h4></div><div class="modal-body"></div><div class="modal-footer"></div></div></div></div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
